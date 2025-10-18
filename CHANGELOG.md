@@ -1,4 +1,35 @@
-# v0.4.1 Pre-Release
+# v1.0.0 Public-Release
+
+## Changelog V1.0.0 Public Release:
+
+### NEW STUFF
+* Compatibility with new Legends Update 19.2
+   * Newly added enemies - added into the eemy mutation system
+   * Perks of the vattghern background updated
+   * The vattghern background was also made much more useful in camp activities
+* A new contract type - vattghern contracts.
+   * These can only be available if you have a vattghern, AND also have more than 525 renown.
+   * The first conctract added: To cleanse a location full of geists
+   * Completing it also gives a chance to recruit a soldier background bro, footman, warrior, or arbalester!
+* New enemies: The Possessed!
+   * These enemies are possessed by geists, and fight against you, having improved skill thanks to the unnatural influence on them
+   * 7 Varitants: Possessed Bandit Raider, Footman, Billman, Arbalester, Witch hunter, Mercenary, Greatsword
+   * These enemies are variants of existing ones, but with unique visuals, tweaked sounds, and a new effevt making them stronger
+     * They are part of the new contract, and can also appear in undead armies during the undead crisis
+
+### BALANCE
+* Slightly buffed the Swertgeist and the Rustungheist
+   * Increased base stats, added a few new perks
+   * Also improved their ai in combat
+* Buffed the infused plates craftable item
+
+### FIXES
+* Correctly enforce new legends version!
+* A few typos here and there
+* Fixed a crash, thanks to a weird interaction between PoV and MC
+* Fixed a few errors caused by PoV's edits of Rotu
+* Fixed the coat with acid skill not applying the effect
+* Improved the rustungheist art (better perspective)
 
 ## Changelog V0.4.1 Pre-Release:
 
