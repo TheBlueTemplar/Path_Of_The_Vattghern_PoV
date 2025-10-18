@@ -1,11 +1,11 @@
-# Path-of-the-Vatt-ghern-V0.4.1-Pre-Release
-**Changelog in the Release Notes**
+# Path-of-the-Vatt-ghern-V1.0.0-Public
+**Changelog in the Release Notes**...**Previous Changes Changelogs in changelog.md above, or the included .txt**
 
-**Previous Changes Changelogs in changelog.md above, or the included .txt**
+### PoV
 
-### Pre - Release Version
+The mod begun as a spiritual successor to "TLW" (The Last Witchers) mod, which we rewrote, and then I kept adding more and more. Currently, it stands on its own as a substantial overhaul/content mod, with quite a few things on the way. Priority is given to keep PoV as compatible as possible with other submods, as well as to strike a balance between challenge and fun.  Main features include: 
 
-Finally, I am getting close... This version is meant to be the last step before PoV's public release. Strap up everyone!
+* *Custom starting scenarios, Contracts, Items, Vattghern creation and mutations, an Enemy Mutation System, Events & Encounters (32 Total), Monster Corpse Drops, and their dissection, New Enemies with custom mechanics, effects, art and sounds, and the overhaul of various systems, like fire damage, the injury system and more!*. 
 
 ### Installation:
 
