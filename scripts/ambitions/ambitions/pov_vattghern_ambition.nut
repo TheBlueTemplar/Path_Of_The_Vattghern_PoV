@@ -1,0 +1,145 @@
+this.pov_vattghern_ambition <- this.inherit("scripts/ambitions/ambition", {
+	m = {},
+	function create()
+	{
+		this.ambition.create();
+		this.m.ID = "ambition.pov_vattghern";
+		this.m.Duration = 14.0 * this.World.getTime().SecondsPerDay;
+		this.m.ButtonText = "Its finally time to get the power of a \'Vatt\'ghern\'... \nThe right materials shall be covered, the potion brewed, and the mutation done!";
+		this.m.RewardTooltip = "You\'ll be awarded a unique [color="+ ::Const.UI.Color.povTooltipBlue + "]Vatt'ghern medallion[/color], and the ability to craft more!";
+		this.m.UIText = "Have at least one man with the \'Vatt'ghern\' trait";
+		this.m.TooltipText = "[color="+ ::Const.UI.Color.povTooltipRed + "]Have at least one man with the \'Vatt'ghern\' trait[/color]. Getting one requires a time consuming, complicated and dangerous process. You will need to gather various monster materials to create the perilous \'Trial of the Grasses\' potion, and then make sure that someone healthy and experienced gets it. You\'ll also need space enough in your inventory for a new item.";
+		this.m.SuccessText = "[img]gfx/ui/events/pov_mysterious_vattghern.png[/img] You were hesitant when %sergeantbrother% first spoke of becoming a Vatt'ghern. After all, who would willingly submit themselves to the Trial of the Grasses - a process that leaves most dead and the rest forever changed? Yet %sergeantbrother% was undeterred, %their_sergeantbrother% resolve forged of steel and tempered by years of hardship. \n\nAt first, %their_sergeantbrother% training seemed ordinary enough - long days with the blade, extended hunts in the wilds, and grueling endurance exercises. But soon, %their_sergeantbrother% efforts took a darker turn. He sought poisons to build resistance, demanded sparring sessions until %their_sergeantbrother% body could barely stand, and endured hunger, cold, and sleepless nights as though testing the limits of human endurance.\n\n%sergeantbrother% spoke little of %their_sergeantbrother% motives, yet the look in %their_sergeantbrother% eyes spoke volumes - a man possessed, chasing strength and power at any cost. The brothers watched with a mix of admiration and unease.\n\nThe day of %their_sergeantbrother% trial came, and what followed was a horror the others would not soon forget. The screams of a man being broken from the inside echoed through the camp for days. When the cries finally ceased, and %sergeantbrother% emerged, %they_sergeantbrother% was not the same man who had entered.\n\nNow, %sergeantbrother% moves with a predatory grace, %their_sergeantbrother% eyes alight with a clarity that unnerves even the bravest among you. He says little of the ordeal, but when asked, %they_sergeantbrother% only smirks and says, %SPEECH_ON% You can\'t forge a blade without fire. %SPEECH_OFF%The brothers may whisper in hushed tones of the inhuman strength %they_sergeantbrother% now wields, but none can deny that %sergeantbrotherfull% has become something more than mortal...";
+		this.m.SuccessButtonText = "Finally";
+	}
+
+	function onUpdateScore()
+	{
+		/*
+		// Disable/Enable this one for debugging
+		if (this.World.Ambitions.getDone() < 4)
+		{
+			return;
+		}
+
+		// Disable/Enable this one for debugging
+		if (this.World.getTime().Days <= 35)
+		{
+			return;
+		}
+		*/
+
+		// Enable only if has special event story_02 done, or PoV origin
+		if (!::World.Flags.has("GotMutagen"))
+		{
+			return;
+		}
+
+		this.m.Score = 50;
+	}
+
+	function onCheckSuccess()
+	{
+		if (!this.World.Assets.getStash().hasEmptySlot())
+		{
+			return false;
+		}
+
+		local brothers = this.World.getPlayerRoster().getAll();
+
+		foreach( bro in brothers )
+		{
+			if (bro.getSkills().hasSkill("trait.pov_witcher"))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function onReward()
+	{
+		local brothers = this.World.getPlayerRoster().getAll();
+		local highestBravery = 0;
+		local bestSergeant;
+
+		foreach( bro in brothers )
+		{
+			if (bro.getSkills().hasSkill("trait.pov_witcher"))
+			{
+				if (bro.getCurrentProperties().getBravery() > highestBravery)
+				{
+					bestSergeant = bro;
+					highestBravery = bro.getCurrentProperties().getBravery();
+				}
+			}
+		}
+
+		if (bestSergeant != null)
+		{
+			bestSergeant.setTitle("the Vatt'ghern");
+			this.m.SuccessList.push({
+				id = 90,
+				icon = "ui/icons/special.png",
+				text = bestSergeant.getNameOnly() + " is now known as " + bestSergeant.getName()
+			});
+		}
+
+		local item = this.new("scripts/items/accessory/pov_vattghern_medallion_item");
+		this.World.Assets.getStash().add(item);
+		this.m.SuccessList.push({
+			id = 10,
+			icon = "ui/items/" + item.getIcon(),
+			text = "You gain " + this.Const.Strings.getArticle(item.getName()) + item.getName()
+		});
+		this.m.SuccessList.push({
+			id = 90,
+			icon = "ui/icons/asset_supplies.png",
+			text = "You also unlock the ability to craft more such medallions from silver and iron"
+		});
+
+		if (!::World.Flags.has("GotMedallion"))
+		{
+			::World.Flags.add("GotMedallion");
+		}
+	}
+
+	function onPrepareVariables( _vars )
+	{
+		local brothers = this.World.getPlayerRoster().getAll();
+		local highestBravery = 0;
+		local bestSergeant;
+
+		foreach( bro in brothers )
+		{
+			if (bro.getSkills().hasSkill("trait.pov_witcher") && bro.getCurrentProperties().getBravery() > highestBravery)
+			{
+				bestSergeant = bro;
+				highestBravery = bro.getCurrentProperties().getBravery();
+			}
+		}
+
+		_vars.push([
+			"sergeantbrother",
+			bestSergeant.getNameOnly()
+		]);
+		::Const.LegendMod.extendVarsWithPronouns(_vars, bestSergeant.getGender(), "sergeantbrother");
+		_vars.push([
+			"sergeantbrotherfull",
+			bestSergeant.getName()
+		]);
+	}
+
+	function onSerialize( _out )
+	{
+		this.ambition.onSerialize(_out);
+	}
+
+	function onDeserialize( _in )
+	{
+		this.ambition.onDeserialize(_in);
+	}
+
+});
+

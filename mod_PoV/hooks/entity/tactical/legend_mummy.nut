@@ -1,0 +1,47 @@
+::TLW.HooksMod.hook("scripts/entity/tactical/legend_mummy", function ( q )
+{
+	q.onInit = @(__original) function()
+	{
+		__original()
+
+		// Corpse Drop
+		if (!::MSU.isKindOf(this.actor, "player")) 
+		{
+			this.actor.m.OnDeathLootTable.push(::TLW.CorpseDrop.getCorpseDrop(actor, ::TLW.Corpse.LegendMummy));
+	  	}
+
+	  	// HERE, ADD EFFECTS YOU ALWAYS WANT APPLIED
+		if(this.World.Assets.getCombatDifficulty() != this.Const.Difficulty.Easy)
+		{
+			local chance;
+			local chanceSecret = 2;
+			switch (this.World.Assets.getCombatDifficulty())
+			{
+				//case this.Const.Difficulty.Easy: mutationChance = 5; break
+				case this.Const.Difficulty.Normal: chance = 7; break
+				case this.Const.Difficulty.Hard: chance = 10; break
+				case this.Const.Difficulty.Legendary: chance = 15; break
+			}
+			if (this.Math.rand(1.0, 100.0) <= chance)
+			{
+				this.m.Skills.add(this.new("scripts/skills/effects/pov_potent_reanimation_effect"));
+			}
+			else if (this.Math.rand(1.0, 100.0) <= chanceSecret)
+			{
+				this.m.Skills.add(this.new("scripts/skills/effects/pov_calcium_deficiency_effect"));
+			}
+		}
+
+		// Enemy Mutation System
+		// Second arg (int) reference in Enemy_Mutations.nut, lines 22+
+		// Third arg (array) reference in Enemy_Mutation_Arrays.nut, in afterhooks (rest in prev file, bottom)
+		::TLW.MutateEntity.mutate_entity(this.actor,::TLW.EnemyMutChance.Default,::TLW.EnemyMut.MummyGroup,false);
+
+
+		// Chaos Mutation
+		::TLW.Chaos.add_mutation_all(this.actor, false)
+
+
+	}
+
+});

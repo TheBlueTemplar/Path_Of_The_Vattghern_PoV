@@ -1,0 +1,149 @@
+this.pov_enemy_mutation_skeleton <- this.inherit("scripts/skills/skill", {
+	m = {
+		//TurnsLeft = 2
+	},
+	function create()
+	{
+		this.m.ID = "effects.pov_enemy_mutation_skeleton";
+		this.m.Name = "[color="+ ::Const.UI.Color.povEnemyMutation + "] Curse Of Undeath [/color]";
+		this.m.Description = "This enemy has the curse of Undeath! They are especially resistant to pierce damage, and tire less quickly, but they also have less hitpoints. They also dont like holy water and priests...and crosses, they hate crosses.";
+		this.m.Icon = "skills/pov_skeleton_mutant.png";
+		this.m.IconMini = "pov_mini_skeleton_mutant";
+		this.m.Type = this.Const.SkillType.StatusEffect;
+		this.m.IsActive = false;
+		this.m.IsRemovedAfterBattle = true;
+	}
+
+	function getDescription()
+	{
+		return "They are especially resistant to pierce damage, and tire less quickly, but they also have less hitpoints. They also dont like holy water and priests...and crosses, they hate crosses.";
+	}
+
+	function getTooltip()
+	{
+		local ret = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			},
+			{
+				id = 11,
+				type = "text",
+				icon = "ui/icons/fatigue.png",
+				text = "Increases Fatigue and Resolve by[color=" + this.Const.UI.Color.PositiveValue + "] 25%[/color]."
+			},
+			{
+				id = 11,
+				type = "text",
+				icon = "ui/icons/direct_damage.png",
+				text = "This character has [color=" + this.Const.UI.Color.PositiveValue + "]40%[/color] piercing damage resistance."
+			},
+			{
+				id = 11,
+				type = "text",
+				icon = "ui/icons/pov_fire.png",
+				text = "This character takes [color=" + this.Const.UI.Color.NegativeValue + "]50%[/color] more damage from fire attacks."
+			},
+
+		];
+		return ret;
+	}
+
+	function onAdded() 
+	{
+		local actor = this.getContainer().getActor();
+		if (!::MSU.isKindOf(actor, "player")) 
+		{
+			actor.m.OnDeathLootTable.push(::TLW.MutagenDrop.getMutagenDrop(actor, ::TLW.Mutation.Skeleton));
+	  	}
+
+	  	if (!this.m.Container.hasSkill("actives.pov_miasma"))
+		{
+			local miasma = this.new("scripts/skills/actives/pov_miasma_skill");
+			//miasma.m.ActionPointCost = 5;
+			//miasma.m.FatigueCost = 30;
+			//miasma.m.MaxRange = 3;
+			this.m.Container.add(miasma);
+
+			if (actor.getAIAgent().findBehavior(::Const.AI.Behavior.ID.Miasma) == null)
+			{
+				actor.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_miasma"));
+				actor.getAIAgent().finalizeBehaviors();
+			}
+		}
+	}
+
+	function onUpdate( _properties )
+	{
+		// Buffs
+		_properties.StaminaMult *= 1.18;
+		_properties.BraveryMult *= 1.25;
+		// Debuffs
+		_properties.HitpointsMult *= 0.82;
+	}
+
+	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
+	{
+		if (_skill == null)
+		{
+			return;
+		}
+
+		switch (_hitInfo.DamageType)
+		{
+			case this.Const.Damage.DamageType.Piercing:
+				if (_skill == null)
+				{
+					_properties.DamageReceivedRegularMult *= 0.6;
+				}
+				else
+				{
+					if (_skill.isRanged())
+					{
+						local weapon = _skill.getItem();
+						if (weapon != null && weapon.isItemType(this.Const.Items.ItemType.Weapon))
+						{
+							_properties.DamageReceivedRegularMult *= 0.6;
+						}
+					}
+					else
+					{
+						_properties.DamageReceivedRegularMult *= 0.6;
+					}
+				}
+				break;
+
+			case this.Const.Damage.DamageType.Cutting:
+				if (_skill == null)
+				{
+					_properties.DamageReceivedRegularMult *= 0.85;
+				}
+				else
+				{
+					if (_skill.isRanged())
+					{
+						local weapon = _skill.getItem();
+						if (weapon != null && weapon.isItemType(this.Const.Items.ItemType.Weapon))
+						{
+							_properties.DamageReceivedRegularMult *= 0.8;
+						}
+					}
+					else
+					{
+						_properties.DamageReceivedRegularMult *= 0.85;
+					}
+				}
+				break;
+				
+			case this.Const.Damage.DamageType.Burning:
+				_properties.DamageReceivedRegularMult *= 1.5;
+				break;
+		}
+	}
+});

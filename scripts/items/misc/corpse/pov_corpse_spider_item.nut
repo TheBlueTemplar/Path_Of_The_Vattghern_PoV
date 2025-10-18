@@ -1,0 +1,54 @@
+this.pov_corpse_spider_item <- this.inherit("scripts/items/misc/corpse/pov_corpse_item", {
+	m = {},
+	function create()
+	{
+		this.pov_corpse_item.create();
+		this.m.ID = "supplies.pov_corpse_spider";
+		this.m.Name = "Webknecht Corpse";
+		this.m.Description = "This corpse is still in fairly good condition.  None of its vital organs have been destroyed.\n\nA skilled medicus may be able to extract useful materials from it.";
+		this.m.Icon = "consumables/pov_corpse_spider.png";
+		this.m.Value = 30;
+		this.m.GoodForDays = 10;
+	}
+
+	function getTooltip()
+	{
+		local result = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			}
+		];
+
+		result.push({
+				id = 3,
+				type = "image",
+				image = "consumables/pov_enemy_spider.png",
+		});
+
+		result.push({
+			id = 11,
+			type = "text",
+			//icon = "ui/icons/special.png",
+			text = "This webkecht is a spider the size of a large dog.  They are very aggressive and groups of them are known to attack travelers on sight.\n\nThey possess the ability to shoot webs and have large fangs that drip with a potent venom. \n\n If their pray is snared by their web, they have almost no defence against their attacks."
+		});
+
+		result.push({
+			id = 67,
+			type = "hint",
+			icon = "ui/icons/warning.png",
+			text = "Will fully decompose in [color=" + this.Const.UI.Color.NegativeValue + "]" + this.getSpoilInDays() + "[/color] days."
+		});
+
+		return result;
+
+	}
+
+});
+

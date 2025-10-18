@@ -1,0 +1,20 @@
+::TLW.HooksMod.hook("scripts/entity/tactical/humans/barbarian_thrall", function ( q ) {
+
+	q.onInit = @(__original) function()
+	{
+		__original()
+
+		// Enemy Mutation System
+		// Second arg (int) reference in Enemy_Mutations.nut, lines 22+
+		// Third arg (array) reference in Enemy_Mutation_Arrays.nut, in afterhooks (rest in prev file, bottom)
+		::TLW.MutateEntity.mutate_entity(this.actor,::TLW.EnemyMutChance.Low,::TLW.EnemyMut.SwarmNorth,false);
+		//::TLW.MutateEntity.mutate_entity(this.actor,::TLW.EnemyMutChance.Test100,[::TLW.EnemyMut.Rot],false);
+
+
+		// Chaos Mutation
+		::TLW.Chaos.add_mutation_all(this.actor, false)
+
+
+	}
+
+});

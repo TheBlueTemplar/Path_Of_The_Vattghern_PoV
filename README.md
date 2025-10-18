@@ -1,0 +1,30 @@
+# Path-of-the-Vatt-ghern-V0.4.1-Pre-Release
+**Changelog in the Release Notes**
+
+**Previous Changes Changelogs in changelog.md above, or the included .txt**
+
+### Pre - Release Version
+
+Finally, I am getting close... This version is meant to be the last step before PoV's public release. Strap up everyone!
+
+### Installation:
+
+* If you have any earlier versions of PoV, remove them!
+* Download the zip of the latest version and place into your battle brothers installation dorectory, in the data folder (Do not extract!) 
+* Download is in the 'releases', in this github page
+
+Recommended Base Modlist (All the Latest Versions):
+* [MSU](https://github.com/MSUTeam/MSU) 
+* [Modern Hooks](https://www.nexusmods.com/battlebrothers/mods/685) 
+* [Legends](https://discord.com/channels/547043336465154049/547427442818809881) 
+* [PoV BETA](https://github.com/TheBlueTemplar/PoV_Closed_Beta/releases)
+* Emo's .exe (Instructions and file [Here](https://discord.com/channels/1332985519256113183/1333009819719958559/1403330906336399520))
+
+At this point of the beta tests, you can include most of whatever you want, Rotu, SSU, MC and whatever else. Testing stability and interactions with other mods is starting to be more and more important!
+
+### Incompatible Mods:
+* Anything incompatible with Legends!
+* Using Bredditor and similar mods can cause millions of issues, keep this in mind!
+
+### More Detailed Information:
+For detailed information about downloading the mod, compatibility with other mods etc. check out the discord server of PoV. [Invite Link](https://discord.gg/zhHTjM5bBB)

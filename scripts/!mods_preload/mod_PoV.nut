@@ -1,0 +1,58 @@
+/////////////////////////////////////////////////////////////////////
+// 					  Author: The Blue Templar 					   //
+// 			Not to be used elsewhere or tampered with, 2025.       //
+/////////////////////////////////////////////////////////////////////
+
+// Credits
+
+// "TLW" left in honor of the OG mod, and my inspiration
+// Abyss, JM and their wonderful ideas, and for being absolute bros and getting me into modding 
+// Chopeks, Son of Satan, Celestial and Breaky for being patient with and helping me
+// Pot and Excalibird for their contribution
+// All of the lovely playtesters, and the contributors to PoV!
+// Legends and the broader modding community for all their tools, documentation and support
+
+// Included Mods
+
+// Silver Weapons is included and tweaked in PoV, credits to Excalibird
+// Pain from injuries is included, tweaked and rewritten in PoV, creadits to Darxo
+
+::TLW <- {
+	ID = "mod_PoV",
+	Name = "Path of the Vatt\'ghern", //PoV
+	Version = "1.0.0",
+	//EnableEnemyMutation = true,	//default settings
+	EnemyMutationScaling = true,
+	ChaosMode = false,
+	McTweaks = false,
+	FotnTweaks = false,
+	SSUTweaks = false,
+	EnableMainMenuArt = true,
+	EnablePovIntroEvent = true
+}
+
+::TLW.HooksMod <- ::Hooks.register(::TLW.ID, ::TLW.Version, ::TLW.Name);
+::TLW.HooksMod.require("mod_msu >= 1.7.2", "mod_modern_hooks >= 0.4.0", "mod_legends >= 19.2.0");
+::TLW.HooksMod.conflictWith("mod_silver_weapons", "mod_PFI", "mod_TLW", "mod_more_bandits", "mod_background_perks", "mod_rpgr_parameters", "mod_LA", "Chirutiru_balance", "mod_Chirutiru_enemies", "zChirutiru_equipment", "mod_partiesDropNameds", "mod_weapons_updated", "mod_weapons", "mod_reforged", "mod_RevampedXPSystem", "mod_rpgr_raids", "mod_beast_loot"); 
+
+::TLW.HooksMod.queue(">mod_legends", ">mod_AC", ">mod_nggh_magic_concept", ">mod_sellswords", ">mod_ROTUC", function() 
+{
+	// Register with MSU so people know to update (Beta Branch)
+	::TLW.Mod <- ::MSU.Class.Mod(::TLW.ID, ::TLW.Version, ::TLW.Name);
+	::TLW.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.GitHub, "https://github.com/TheBlueTemplar/PoV_Closed_Beta");
+	::TLW.Mod.Registry.setUpdateSource(::MSU.System.Registry.ModSourceDomain.GitHub);
+
+	// load mod files 
+    ::include("mod_PoV/load.nut");
+    // load mod settings 
+    ::include("mod_PoV/settingsLoad.nut");
+});
+
+::TLW.HooksMod.queue(">mod_legends", ">mod_AC", ">mod_nggh_magic_concept", ">mod_sellswords", ">mod_ROTUC", function() {
+    // Load all files in afterHooks Folder
+	::includeFiles(::IO.enumerateFiles(TLW.ID + "/afterHooks"));
+}, ::Hooks.QueueBucket.AfterHooks);
+
+
+
+

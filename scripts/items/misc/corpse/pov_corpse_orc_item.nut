@@ -1,0 +1,53 @@
+this.pov_corpse_orc_item <- this.inherit("scripts/items/misc/corpse/pov_corpse_item", {
+	m = {},
+	function create()
+	{
+		this.pov_corpse_item.create();
+		this.m.ID = "supplies.pov_corpse_orc";
+		this.m.Name = "Orc Young Corpse";
+		this.m.Description = "This brutish corpse is still in fairly good condition.\n\nA skilled medicus may be able to extract useful materials from it.";
+		this.m.Icon = "consumables/pov_corpse_orc.png";
+		this.m.GoodForDays = 10;
+	}
+
+	function getTooltip()
+	{
+		local result = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			}
+		];
+
+		result.push({
+				id = 3,
+				type = "image",
+				image = "consumables/pov_enemy_orc.png",
+		});
+
+		result.push({
+			id = 11,
+			type = "text",
+			//icon = "ui/icons/special.png",
+			text = "Orc young are already as bulky and muscled as the strongest of humans and possess incredible endurance and ferocity.  Groups of orc young can often be found raiding villages.  As a rite of initiation, young orcs are sent out to either kill or be killed.\n\nFighting a group of orcs is similar to fighting a herd of charging bulls.  A preferred tactic is to slam into opponents at full speed to stun them."
+		});
+		result.push({
+			id = 67,
+			type = "hint",
+			icon = "ui/icons/warning.png",
+			text = "Will decompose in [color=" + this.Const.UI.Color.NegativeValue + "]" + this.getSpoilInDays() + "[/color] days."
+		});
+
+
+		return result;
+
+	}
+
+});
+

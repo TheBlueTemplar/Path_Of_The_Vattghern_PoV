@@ -1,0 +1,75 @@
+this.pov_skeleton_mutagen_item <- this.inherit("scripts/items/misc/anatomist/pov_anatomist2_potion_item", {
+	m = {},
+	function create()
+	{
+		this.pov_anatomist2_potion_item.create();
+		this.m.ID = "misc.pov_skeleton_mutagen";
+		this.m.Name = "Undeath Mutagen";
+		this.m.Description = "This mutagen infuses the bearer with traits of the undead, granting unnatural resilience at a steep cost. Piercing attacks are less effective against them, and their reduced need for food makes them easy to sustain. They also present greater endurance in battle, and their emotions are muted, making psychic attacks against them weaker. Additionally, thanks to their \"curse\", they are able to manifest a distruptive miasma, disorganising enemy lines. \n\n However, their body heals at a much slower rate, and they are highly susceptible to fire, a devastating weakness. Also, the bearer’s morale is forever stunted, unable to feel the strength of confidence. A sinister transformation for those who seek endurance through sacrifice.";
+		this.m.IconLarge = "";
+		this.m.Icon = "consumables/pov_potion_skele.png";
+		this.m.Value = 500;
+	}
+
+	function getTooltip()
+	{
+		local result = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			}
+		];
+		result.push({
+			id = 66,
+			type = "text",
+			text = this.getValueString()
+		});
+
+		if (this.getIconLarge() != null)
+		{
+			result.push({
+				id = 3,
+				type = "image",
+				image = this.getIconLarge(),
+				isLarge = true
+			});
+		}
+		else
+		{
+			result.push({
+				id = 3,
+				type = "image",
+				image = this.getIcon()
+			});
+		}
+
+
+		result.push({
+			id = 65,
+			type = "text",
+			icon = "ui/tooltips/warning.png",
+			text = "Mutates the body, causing severe sickness"
+		});
+
+		result.push({
+			id = 65,
+			type = "text",
+			icon = "ui/tooltips/warning.png",
+			text = "Must have Witcher Mutation and not already used this mutagen."
+		});
+
+		return result;
+	}
+
+	function onUse( _actor, _item = null )
+	{
+		return ::TLW.MutatePlayer.mutatePlayer(_actor, ::TLW.PlayerMutation.Skeleton);
+	}
+});
+

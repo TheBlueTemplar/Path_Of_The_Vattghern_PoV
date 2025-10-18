@@ -1,0 +1,59 @@
+::Const.CharacterTraits.extend(
+[
+// TRAITS THAT WILL BE ADDED TO SPAWNLIST
+// ALSO USED BY BREDITOR - NICE FOR TESTING
+// DO NOT INCLUDE TRAITS THAT YOU DONT WANT SPAWNING RANDOMLY (put them below for testing)
+	[
+		"trait.pov_fear_mutants",
+		"scripts/skills/traits/pov_fear_mutants_trait"
+	],
+	[
+		"trait.pov_hate_mutants",
+		"scripts/skills/traits/pov_hate_mutants_trait"
+	],
+	[
+		"trait.pov_nyctophobia",
+		"scripts/skills/traits/pov_nyctophobia_trait"
+	],
+	[
+		"trait.pov_monster_hunter",
+		"scripts/skills/traits/pov_monster_hunter_trait"
+	],
+	[
+		"trait.pov_pov_misanthropist",
+		"scripts/skills/traits/pov_misanthropist_trait"
+	],
+	[
+		"trait.pov_hate_everything",
+		"scripts/skills/traits/pov_hate_everything_trait"
+	],
+	[
+		"trait.pov_pluviophile",
+		"scripts/skills/traits/pov_pluviophile_trait"
+	],
+	[
+		"trait.pov_hate_ghosts",
+		"scripts/skills/traits/pov_hate_ghosts_trait"
+	],
+]);
+
+// Only For Testing!! Remember to disable!
+::Const.CharacterTraits.extend(
+[
+	/*[
+		"trait.pov_seductive",
+		"scripts/skills/traits/pov_seductive_trait"
+	],*/
+	/*[
+		"trait.pov_psychopath",
+		"scripts/skills/traits/pov_psychopath_trait"
+	],*/
+	/*[
+		"trait.pov_witcher",
+		"scripts/skills/traits/pov_vattghern_trait"
+	],*/
+	/*[
+		"trait.pov_old_vattghern",
+		"scripts/skills/traits/pov_old_vattghern_trait"
+	],*/
+]);
