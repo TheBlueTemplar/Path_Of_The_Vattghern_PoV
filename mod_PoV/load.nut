@@ -7,29 +7,29 @@
 ::TLW.hasSSU <- ::mods_getRegisteredMod("mod_sellswords") != null;
 ::TLW.hasROTU <- ::mods_getRegisteredMod("mod_ROTUC") != null;
 ::TLW.hasMC <- ::mods_getRegisteredMod("mod_nggh_magic_concept") != null;
-::TLW.hasFOTN <- ::mods_getRegisteredMod("mod_nggh_magic_concept") != null;
+::TLW.hasFOTN <- ::mods_getRegisteredMod("mod_fury_of_the_northmen") != null;
 
 // Load all files in High Prio Config Folder
-::includeFiles(::IO.enumerateFiles(TLW.ID + "/!!config"));
+::includeFiles(::IO.enumerateFiles("mod_PoV/!!config"));
 // Load all files in Prio Config Folder
-::includeFiles(::IO.enumerateFiles(TLW.ID + "/!config"));
+::includeFiles(::IO.enumerateFiles("mod_PoV/!config"));
 // Load all files in Config Folder
-::includeFiles(::IO.enumerateFiles(TLW.ID + "/config"));
+::includeFiles(::IO.enumerateFiles("mod_PoV/config"));
 // load register folder
-::includeFiles(::IO.enumerateFiles(TLW.ID + "/register"));
+::includeFiles(::IO.enumerateFiles("mod_PoV/register"));
 // Load all files in Settings Folder
-::includeFiles(::IO.enumerateFiles(TLW.ID + "/settings"));
+::includeFiles(::IO.enumerateFiles("mod_PoV/settings"));
 // Load all files in Hooks Folder
-::includeFiles(::IO.enumerateFiles(TLW.ID + "/hooks"));
+::includeFiles(::IO.enumerateFiles("mod_PoV/hooks"));
 
 // Load SSU shit, if exists
-if (::TLW.hasSSU){::includeFiles(::IO.enumerateFiles(TLW.ID + "/hooks_SSU"));}
+if (::TLW.hasSSU){::includeFiles(::IO.enumerateFiles("mod_PoV/hooks_SSU"));}
 // Load ROTU shit, if exists
-if (::TLW.hasROTU){::includeFiles(::IO.enumerateFiles(TLW.ID + "/hooks_ROTU"));}
+if (::TLW.hasROTU){::includeFiles(::IO.enumerateFiles("mod_PoV/hooks_ROTU"));}
 // Load MC shit, if exists
-if (::TLW.hasMC){::includeFiles(::IO.enumerateFiles(TLW.ID + "/hooks_MC"));}
+if (::TLW.hasMC){::includeFiles(::IO.enumerateFiles("mod_PoV/hooks_MC"));}
 // Load FOTN shit, if exists
-if (::TLW.hasFOTN){::includeFiles(::IO.enumerateFiles(TLW.ID + "/hooks_FOTN"));}
+if (::TLW.hasFOTN){::includeFiles(::IO.enumerateFiles("mod_PoV/hooks_FOTN"));}
 
 // update the perk tooltips (done by legends)
 //::Const.Perks.updatePerkGroupTooltips();

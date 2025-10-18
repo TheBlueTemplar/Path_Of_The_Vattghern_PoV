@@ -29,17 +29,17 @@
 	SSUTweaks = false,
 	EnableMainMenuArt = true,
 	EnablePovIntroEvent = true
-}
+};
 
 ::TLW.HooksMod <- ::Hooks.register(::TLW.ID, ::TLW.Version, ::TLW.Name);
-::TLW.HooksMod.require("mod_msu >= 1.7.2", "mod_modern_hooks >= 0.4.0", "mod_legends >= 19.2.0");
-::TLW.HooksMod.conflictWith("mod_silver_weapons", "mod_PFI", "mod_TLW", "mod_more_bandits", "mod_background_perks", "mod_rpgr_parameters", "mod_LA", "Chirutiru_balance", "mod_Chirutiru_enemies", "zChirutiru_equipment", "mod_partiesDropNameds", "mod_weapons_updated", "mod_weapons", "mod_reforged", "mod_RevampedXPSystem", "mod_rpgr_raids", "mod_beast_loot"); 
+::TLW.HooksMod.require("mod_legends >= 19.1.42", "mod_modern_hooks >= 0.4.0", "mod_msu >= 1.2.7");
+::TLW.HooksMod.conflictWith("mod_silver_weapons", "mod_PFI", "mod_TLW", "mod_weapons_updated", "mod_weapons", "mod_reforged"); 
 
-::TLW.HooksMod.queue(">mod_legends", ">mod_AC", ">mod_nggh_magic_concept", ">mod_sellswords", ">mod_ROTUC", function() 
+::TLW.HooksMod.queue(">mod_legends", ">mod_msu", ">mod_nggh_magic_concept", ">mod_sellswords", ">mod_ROTUC", function() 
 {
-	// Register with MSU so people know to update (Beta Branch)
+	// Register with MSU so people know to update (Public Branch)
 	::TLW.Mod <- ::MSU.Class.Mod(::TLW.ID, ::TLW.Version, ::TLW.Name);
-	::TLW.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.GitHub, "https://github.com/TheBlueTemplar/PoV_Closed_Beta");
+	::TLW.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.GitHub, "https://github.com/TheBlueTemplar/Path_Of_The_Vattghern_PoV");
 	::TLW.Mod.Registry.setUpdateSource(::MSU.System.Registry.ModSourceDomain.GitHub);
 
 	// load mod files 
@@ -48,9 +48,9 @@
     ::include("mod_PoV/settingsLoad.nut");
 });
 
-::TLW.HooksMod.queue(">mod_legends", ">mod_AC", ">mod_nggh_magic_concept", ">mod_sellswords", ">mod_ROTUC", function() {
+::TLW.HooksMod.queue(">mod_legends", ">mod_msu", ">mod_nggh_magic_concept", ">mod_sellswords", ">mod_ROTUC", function() {
     // Load all files in afterHooks Folder
-	::includeFiles(::IO.enumerateFiles(TLW.ID + "/afterHooks"));
+	::includeFiles(::IO.enumerateFiles("mod_PoV/afterHooks"));
 }, ::Hooks.QueueBucket.AfterHooks);
 
 

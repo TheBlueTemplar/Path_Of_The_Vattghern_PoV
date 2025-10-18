@@ -38,6 +38,7 @@
 ]);
 
 // Only For Testing!! Remember to disable!
+/*
 ::Const.CharacterTraits.extend(
 [
 	/*[
@@ -55,5 +56,6 @@
 	/*[
 		"trait.pov_old_vattghern",
 		"scripts/skills/traits/pov_old_vattghern_trait"
-	],*/
+	],
 ]);
+*/
