@@ -1,11 +1,20 @@
-# Path-of-the-Vatt-ghern-V1.0.0-Public
+# Path of the Vatt'ghern - Public
 **Changelog in the Release Notes**...**Previous Changes Changelogs in changelog.md above, or the included .txt**
+**Also make sure to read the License file, in the same github directory**
 
 ### PoV
 
-The mod begun as a spiritual successor to "TLW" (The Last Witchers) mod, which we rewrote, and then I kept adding more and more. Currently, it stands on its own as a substantial overhaul/content mod, with quite a few things on the way. Priority is given to keep PoV as compatible as possible with other submods, as well as to strike a balance between challenge and fun.  Main features include: 
+The mod begun as a spiritual successor to "TLW" (The Last Witchers) mod, which we rewrote, and then I kept adding more and more. Currently, it stands on its own as a substantial overhaul/content mod, with quite a few things on the way. Priority is given to keep PoV as compatible as possible with other submods, as well as to strike a balance between challenge and fun.  
 
-* *Custom starting scenarios, Contracts, Items, Vattghern creation and mutations, an Enemy Mutation System, Events & Encounters (32 Total), Monster Corpse Drops, and their dissection, New Enemies with custom mechanics, effects, art and sounds, and the overhaul of various systems, like fire damage, the injury system and more!*. 
+### Main features:
+* **Vatt'ghern** - A powerful mid-late game upgrade for any mercenary, granting access to powerful scaling buffs and effects, special skills, contracts and more! Tied to most of the mod's mechanics
+* **Mutations** - Mutagenic effects are not just limited to the player, but enemies can also spawn with them, granting them new skills and effects, along with visuals
+* **Corpses** - Most enemies can drop corpses, that can be dissected in the crafting tent to yield resources (some exclusive to them, like special mutagens!)
+* **Enemies** - Currently having expanded the ghost (geist) enemy type, with 9 New enemies (one is with 7 different variants), all with custom effects, skills, sounds, art and visuals.
+* **Events** -  (and encounters): 32 Total and counting, in an effort to provide narrative and immersion. Some of PoV's mechanics are even "locked" behind certain milestone events
+* **Starting Scenarios** - 3 Different ones, for different tastes (solo start, OP start, normal start), all fitting their niche. 
+* **New Items and Weapons** - Quite a few new items and weapons to complement a player's options
+* **Overhauled Mechanics** -  Including new monster effects, fire damage, the injury system etc.
 
 ### Installation:
 
@@ -27,4 +36,4 @@ At this point of the beta tests, you can include most of whatever you want, Rotu
 * Using Bredditor and similar mods can cause millions of issues, keep this in mind!
 
 ### More Detailed Information:
-For detailed information about downloading the mod, compatibility with other mods etc. check out the discord server of PoV. [Invite Link](https://discord.gg/zhHTjM5bBB)
+For detailed information about downloading the mod, and a nice vibrant community around it, check out the discord server of PoV. [Invite Link](https://discord.gg/zhHTjM5bBB)
