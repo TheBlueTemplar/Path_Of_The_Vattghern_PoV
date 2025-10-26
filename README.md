@@ -31,11 +31,9 @@ Recommended Base Modlist (All the Latest Versions):
 * [PoV BETA](https://github.com/TheBlueTemplar/PoV_Closed_Beta/releases)
 * Emo's .exe (Instructions and file [Here](https://discord.com/channels/1332985519256113183/1333009819719958559/1403330906336399520))
 
-At this point of the beta tests, you can include most of whatever you want, Rotu, SSU, MC and whatever else. Testing stability and interactions with other mods is starting to be more and more important!
-
 ### Incompatible Mods:
 * Anything incompatible with Legends!
-* Using Bredditor and similar mods can cause millions of issues, keep this in mind!
+* Using Bredditor and similar mods improperly can cause millions of issues, keep this in mind!
 
 ### More Detailed Information:
 For detailed information about downloading the mod, and a nice vibrant community around it, check out the discord server of PoV. [Invite Link](https://discord.gg/zhHTjM5bBB)
