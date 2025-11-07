@@ -21,7 +21,7 @@ The mod begun as a spiritual successor to "TLW" (The Last Witchers) mod, which w
 ### Installation:
 
 * If you have any earlier versions of PoV, remove them!
-* Download the zip of the latest version and place into your battle brothers installation dorectory, in the data folder (Do not extract!) 
+* Download the zip of the latest version and place into your battle brothers installation directory, in the data folder (Do not extract!) 
 * Download is in the 'releases', in this github page
 
 Recommended Base Modlist (All the Latest Versions):
