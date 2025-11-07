@@ -21,14 +21,14 @@ The mod begun as a spiritual successor to "TLW" (The Last Witchers) mod, which w
 ### Installation:
 
 * If you have any earlier versions of PoV, remove them!
-* Download the zip of the latest version and place into your battle brothers installation directory, in the data folder (Do not extract!) 
+* Download the zip of the [latest version](https://github.com/TheBlueTemplar/Path_Of_The_Vattghern_Public/releases) and place into your battle brothers installation directory, in the data folder (Do not extract!) 
 * Download is in the 'releases', in this github page
 
 Recommended Base Modlist (All the Latest Versions):
 * [MSU](https://github.com/MSUTeam/MSU) 
 * [Modern Hooks](https://www.nexusmods.com/battlebrothers/mods/685) 
 * [Legends](https://discord.com/channels/547043336465154049/547427442818809881) 
-* [PoV BETA](https://github.com/TheBlueTemplar/PoV_Closed_Beta/releases)
+* [PoV](https://github.com/TheBlueTemplar/Path_Of_The_Vattghern_Public/releases)
 * Emo's .exe (Instructions and file [Here](https://discord.com/channels/1332985519256113183/1333009819719958559/1403330906336399520))
 
 ### Incompatible Mods:
