@@ -1,5 +1,6 @@
 # Path of the Vatt'ghern - Public
 **Changelog in the Release Notes**...**Previous Changes Changelogs in changelog.md above, or the included .txt**
+
 **Also make sure to read the License file, in the same github directory**
 <img width="1440" height="810" alt="pov_title" src="https://github.com/user-attachments/assets/d004b246-55ed-488f-9ec3-c57cf36c1826" />
 
