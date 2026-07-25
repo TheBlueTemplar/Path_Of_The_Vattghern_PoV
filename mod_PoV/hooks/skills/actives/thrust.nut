@@ -18,12 +18,18 @@
 			this.m.Name = "Heavy Thrust";
 			this.m.ID = "actives.thrust_heavy_throwing";
 			this.m.Description += "\n\nWhile this weapon is not meant for melee, it can be used to deliver a weigthy, strong melee attack.";
+			this.m.ActionPointCost = 5;
+			this.m.FatigueCost = 16;
 		} else if (this.m.IsGun) {
 			this.m.Name = "Heavy Thrust";
 			this.m.Description += "\n\nThe wielded weapon\'s pointy end allows it to effectively perform a heavy thrust, like a heavy spear.";
+			//this.m.ActionPointCost = 5;
+			this.m.FatigueCost = 20;
 		} else if (this.m.IsSword) {
 			this.m.Name = "Halfsword";
 			this.m.Description += "\n\n Grip the blade of the sword with one hand and thrust it to an enemy, gaining more control and precision, while aiming at the gaps of the enemy\'s armor. \n\n Can only be used when double gripping a sword, or with certain 2 handed ones.";
+			this.m.ActionPointCost = 5;
+			this.m.FatigueCost = 20;
 
 			if (_item.getID() == "weapon.pov_vattghern_longsword"
 				|| _item.getID() == "weapon.pov_vattghern_sword")
@@ -40,6 +46,8 @@
 		} else if (this.m.IsGreatSword) {
 			this.m.Name = "Heavy Halfsword";
 			this.m.Description += "\n\n Grip the blade of the sword with one hand and thrust it to an enemy, gaining more control and precision, while aiming at the gaps of the enemy\'s armor. \n\n Can only be used when double gripping a sword, or with certain 2 handed ones.";
+			this.m.ActionPointCost = 7;
+			this.m.FatigueCost = 25;
 
 			if (_item.getID() == "weapon.pov_vattghern_longsword"
 				|| _item.getID() == "weapon.pov_vattghern_sword")
@@ -109,23 +117,17 @@
 			_properties.DamageTotalMult *= _properties.IsSpecializedInThrowing ? 0.95 : 0.80;
 			_properties.DamageDirectMult *= 0.90;
 			_properties.MeleeSkill += 20;
-			this.m.FatigueCost = 16;
-			this.m.ActionPointCost = 5;
 		} else if (this.m.IsGun && _skill == this) {
 			_properties.DamageTotalMult *= 0.80;
 			_properties.DamageDirectMult *= 1.40;
 			_properties.DamageArmorMult *= 0.80;
 			_properties.MeleeSkill += 20;
-			this.m.FatigueCost = 20;
-			//this.m.ActionPointCost = 5;
 		} else if (this.m.IsSword && _skill == this) {
 			_properties.ThresholdToInflictInjuryMult *= 0.85;
 			_properties.DamageTotalMult *= 1.08;
 			_properties.DamageDirectMult *= 1.40;
 			_properties.DamageArmorMult *= 0.65;
 			_properties.MeleeSkill += 20;
-			this.m.FatigueCost = 20;
-			this.m.ActionPointCost = 5;
 
 			if (this.m.IsEstoc) {
 				_properties.DamageTotalMult *= 1.12;
@@ -136,8 +138,6 @@
 			_properties.DamageDirectMult *= 1.40;
 			_properties.DamageArmorMult *= 0.70;
 			_properties.MeleeSkill += 20;
-			this.m.FatigueCost = 25;
-			this.m.ActionPointCost = 7;
 
 			if (this.m.IsEstoc) {
 				_properties.DamageTotalMult *= 1.20;
