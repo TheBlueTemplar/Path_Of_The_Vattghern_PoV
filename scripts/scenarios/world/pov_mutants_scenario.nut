@@ -1,7 +1,7 @@
 this.pov_mutants_scenario <- this.inherit("scripts/scenarios/world/starting_scenario", {
 	m = {},
-	function create()
-	{
+
+	function create() {
 		this.m.ID = "scenario.pov_mutants";
 		this.m.Name = "(PoV) Mutants";
 		this.m.Description = "[p=c][img]gfx/ui/events/pov_mutants_origin.png[/img][/p][p]The world is sick, and you are part of that sickness. You do not care, you have accepted it long ago. After conversing with a man of peculiar expertise, you have decided to set out in the world, together, to find like minded individuals, and get yourself what life did not grant you.\n\n[color=" + this.Const.UI.Color.povOriginGood + "]Mutants:[/color] Start with an anatomist and two battle-ready mutants. Mutants in this origin do not have the penalties of the \"Unstable Mutations\" trait. \n\n[color=" + this.Const.UI.Color.povOriginGood + "]Like-minded individuals:[/color] Mutants, Anatomists, Alchemists, Taxidermists and Inventors can be found more frequently, and are cheaper to recruit and maintain. You can also find Forsaken, a background exclusive to this origin. \n\n[color=" + this.Const.UI.Color.povOriginGood + "]Mutation Expertise:[/color] You cannot get corpse drops. Instead, mutagen drop rate from enemy mutants is increased x2.5 . Enemy mutants appear 20% more often, and you deal 10% more damage to them. You also get 15% more loot. You can still create a Vatt\'ghern normally if you wish, but you will not get the guiding \"story\" events. \n\n[color=" + this.Const.UI.Color.povOriginBad + "]Repulsive:[/color] Start hostile to a random northern and southern faction. Get 10% worse prices overall. All backgrounds for hire not mentioned above are more expensive.[/p]";
@@ -11,27 +11,21 @@ this.pov_mutants_scenario <- this.inherit("scripts/scenarios/world/starting_scen
 		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}
 
-	function onSpawnAssets()
-	{
+	function onSpawnAssets() {
 		local roster = this.World.getPlayerRoster();
 		local names = [];
 
-		for( local i = 0; i < 3; i = ++i )
-		{
+		for (local i = 0; i < 3; i = ++i) {
 			local bro;
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
-			if (i==0)
-			{
+			if (i == 0) {
 				bro.improveMood(1.0, "What did I get myself into?");
-			}
-			else
-			{
+			} else {
 				bro.improveMood(1.5, "Tackles life head on!");
-			}	
+			}
 
-			while (names.find(bro.getNameOnly()) != null)
-			{
+			while (names.find(bro.getNameOnly()) != null) {
 				bro.setName(this.Const.Strings.CharacterNames[this.Math.rand(0, this.Const.Strings.CharacterNames.len() - 1)]);
 			}
 
@@ -126,15 +120,16 @@ this.pov_mutants_scenario <- this.inherit("scripts/scenarios/world/starting_scen
 		this.World.Assets.m.Ammo = this.Math.round(this.World.Assets.m.Ammo * 1.00);
 	}
 
-	function onSpawnPlayer()
-	{
+	function onSpawnPlayer() {
 		local randomVillage;
 
-		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = ++i )
-		{
+		for (local i = 0; i != this.World.EntityManager.getSettlements().len(); i = ++i) {
 			randomVillage = this.World.EntityManager.getSettlements()[i];
 
-			if (!randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() >= 3 && !randomVillage.isSouthern())
+			if (!randomVillage.isMilitary()
+				&& !randomVillage.isIsolatedFromRoads()
+				&& randomVillage.getSize() >= 3
+				&& !randomVillage.isSouthern())
 			{
 				break;
 			}
@@ -144,108 +139,96 @@ this.pov_mutants_scenario <- this.inherit("scripts/scenarios/world/starting_scen
 		local navSettings = this.World.getNavigator().createSettings();
 		navSettings.ActionPointCosts = this.Const.World.TerrainTypeNavCost_Flat;
 
-		do
-		{
+		do {
 			local x = this.Math.rand(this.Math.max(2, randomVillageTile.SquareCoords.X - 4), this.Math.min(this.Const.World.Settings.SizeX - 2, randomVillageTile.SquareCoords.X + 4));
 			local y = this.Math.rand(this.Math.max(2, randomVillageTile.SquareCoords.Y - 4), this.Math.min(this.Const.World.Settings.SizeY - 2, randomVillageTile.SquareCoords.Y + 4));
 
-			if (!this.World.isValidTileSquare(x, y))
-			{
-			}
-			else
-			{
+			if (!this.World.isValidTileSquare(x, y)) {
+			} else {
 				local tile = this.World.getTileSquare(x, y);
 
-				if (tile.Type == this.Const.World.TerrainType.Ocean || tile.Type == this.Const.World.TerrainType.Shore || tile.IsOccupied)
+				if (tile.Type == this.Const.World.TerrainType.Ocean
+					|| tile.Type == this.Const.World.TerrainType.Shore
+					|| tile.IsOccupied)
 				{
-				}
-				else if (tile.getDistanceTo(randomVillageTile) <= 1)
-				{
-				}
-				else
-				{
+				} else if (tile.getDistanceTo(randomVillageTile) <= 1) {
+				} else {
 					local path = this.World.getNavigator().findPath(tile, randomVillageTile, navSettings, 0);
 
-					if (!path.isEmpty())
-					{
+					if (!path.isEmpty()) {
 						randomVillageTile = tile;
 						break;
 					}
 				}
 			}
-		}
-		while (1);
+		} while (1);
 
 		this.World.State.m.Player = this.World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
 		// Test Only!
 		//randomVillage.addSituation(this.new("scripts/entity/world/settlements/situations/pov_mutants_visit_settlement_situation"));
 		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
-		this.Time.scheduleEvent(this.TimeUnit.Real, 1000, function ( _tag )
-		{
+		this.Time.scheduleEvent(this.TimeUnit.Real, 1000, function (_tag) {
 			this.Music.setTrackList(this.Const.Music.IntroTracks, this.Const.Music.CrossFadeTime);
 			this.World.Events.fire("event.pov_mutants_intro");
 		}, null);
 
 		// Random North n South Factions relation drop!
+		local makeHostile = function (_settlements, _factionType) {
+			if (_settlements.len() == 0) {
+				return;
+			}
+
+			local settlement = _settlements[this.Math.rand(0, _settlements.len() - 1)];
+			local f = settlement.getFactionOfType(_factionType);
+
+			if (f != null) {
+				f.addPlayerRelation(-75.0, "This faction hates Mutants");
+			}
+		};
+
+		local northern = [];
+		local southern = [];
+
+		foreach (settlement in this.World.EntityManager.getSettlements()) {
+			if (settlement.isIsolatedFromRoads() || settlement.getSize() < 3) {
+				continue;
+			}
+
+			if (settlement.isSouthern()) {
+				southern.push(settlement);
+			} else if (!settlement.isMilitary()) {
+				northern.push(settlement);
+			}
+		}
 
 		// North part
-		local randomVillageNorth;
-
-		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = ++i )
-		{
-			randomVillageNorth = this.World.EntityManager.getSettlements()[i];
-
-			if (!randomVillageNorth.isMilitary() && !randomVillageNorth.isIsolatedFromRoads() && randomVillageNorth.getSize() >= 3 && !randomVillageNorth.isSouthern())
-			{
-				break;
-			}
-		}
-
-		local f = randomVillageNorth.getFactionOfType(this.Const.FactionType.NobleHouse);
-		//f.addPlayerRelation(-75.0, "This faction hates Mutants");
+		makeHostile(northern, this.Const.FactionType.NobleHouse);
 
 		// South
-		local randomVillageSouth;
-
-		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = ++i )
-		{
-			randomVillageSouth = this.World.EntityManager.getSettlements()[i];
-
-			if (!randomVillageSouth.isIsolatedFromRoads() && randomVillageSouth.getSize() >= 3 && randomVillageSouth.isSouthern())
-			{
-				break;
-			}
-		}
-
-		if (randomVillageSouth != null)
-		{
-			local f = randomVillageSouth.getFactionOfType(this.Const.FactionType.OrientalCityState);
-			f.addPlayerRelation(-75.0, "This faction hates Mutants");
-		}
+		makeHostile(southern, this.Const.FactionType.OrientalCityState);
 	}
 
-	function onHiredByScenario(bro)
-	{
-		if (bro.getBackground().getID() == "background.pov_mutant" || bro.getBackground().getID() == "background.pov_forsaken")
+	function onHiredByScenario(bro) {
+		if (bro.getBackground().getID() == "background.pov_mutant"
+			|| bro.getBackground().getID() == "background.pov_forsaken")
 		{
 			bro.improveMood(1.5, "Glad to be amongst their kind");
-		}
-		else if (bro.getBackground().getID() == "background.anatomist" || bro.getBackground().getID() == "background.legend_alchemist" || bro.getBackground().getID() == "background.legend_taxidermist" || bro.getBackground().getID() == "background.legend_inventor")
+		} else if (bro.getBackground().getID() == "background.anatomist"
+			|| bro.getBackground().getID() == "background.legend_alchemist"
+			|| bro.getBackground().getID() == "background.legend_taxidermist"
+			|| bro.getBackground().getID() == "background.legend_inventor")
 		{
 			bro.improveMood(1.0, "Happy to join an interesting cause");
-		}
-		else if (bro.getSkills().hasSkill("trait.pov_fear_mutants") || bro.getSkills().hasSkill("trait.pov_hate_mutants"))
+		} else if (bro.getSkills().hasSkill("trait.pov_fear_mutants")
+			|| bro.getSkills().hasSkill("trait.pov_hate_mutants"))
 		{
 			bro.worsenMood(1.5, "Hates being amongst Mutants");
-		}
-		else
-		{
+		} else {
 			bro.worsenMood(0.5, "Feels weird in a company of Mutants");
 		}
 	}
 
-	function onUpdateHiringRoster( _roster )
-	{
+	function onUpdateHiringRoster(_roster) {
 		// Mutants
 		this.addBroToRoster(_roster, "pov_mutant_background", 60);
 		this.addBroToRoster(_roster, "pov_mutant_background", 40);
@@ -265,36 +248,37 @@ this.pov_mutants_scenario <- this.inherit("scripts/scenarios/world/starting_scen
 		this.addBroToRoster(_roster, "legend_inventor_background", 10);
 	}
 
-	function onGenerateBro(bro)
-	{
-		if (bro.getBackground().getID() == "background.anatomist" || bro.getBackground().getID() == "background.legend_alchemist" || bro.getBackground().getID() == "background.legend_taxidermist" || bro.getBackground().getID() == "background.legend_inventor" || bro.getBackground().getID() == "background.pov_mutant" || bro.getBackground().getID() == "background.pov_forsaken")
+	function onGenerateBro(bro) {
+		if (bro.getBackground().getID() == "background.anatomist"
+			|| bro.getBackground().getID() == "background.legend_alchemist"
+			|| bro.getBackground().getID() == "background.legend_taxidermist"
+			|| bro.getBackground().getID() == "background.legend_inventor"
+			|| bro.getBackground().getID() == "background.pov_mutant"
+			|| bro.getBackground().getID() == "background.pov_forsaken")
 		{
 			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 0.70);
 			bro.getBaseProperties().DailyWageMult *= 0.70;
 			bro.getSkills().update();
-		}
-		else if (bro.getSkills().hasSkill("trait.pov_fear_mutants") || bro.getSkills().hasSkill("trait.pov_hate_mutants"))
+		} else if (bro.getSkills().hasSkill("trait.pov_fear_mutants")
+			|| bro.getSkills().hasSkill("trait.pov_hate_mutants"))
 		{
 			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 1.50);
 			bro.getBaseProperties().DailyWageMult *= 1.50;
 			bro.getSkills().update();
-		}
-		else
-		{
+		} else {
 			bro.m.HiringCost = this.Math.floor(bro.m.HiringCost * 1.30);
 			bro.getBaseProperties().DailyWageMult *= 1.30;
 			bro.getSkills().update();
 		}
 	}
 
-	function onInit()
-	{
+	function onInit() {
 		this.starting_scenario.onInit();
 		this.World.Assets.m.BuyPriceMult = 1.10;
 		this.World.Assets.m.SellPriceMult = 0.90;
 		this.World.Assets.m.ExtraLootChance = 15;
 		//this.World.State.getPlayer().m.BaseMovementSpeed = 120;
-		if (this.World.State.getPlayer() != null)	//fallback for movespeed multiplier
+		if (this.World.State.getPlayer() != null) //fallback for movespeed multiplier
 		{
 			// No idea why I did the do like it is done
 			//this.World.State.getPlayer().m.BaseMovementSpeed = 120;
@@ -302,4 +286,3 @@ this.pov_mutants_scenario <- this.inherit("scripts/scenarios/world/starting_scen
 	}
 
 });
-
