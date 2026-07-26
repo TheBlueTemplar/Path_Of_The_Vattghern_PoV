@@ -106,7 +106,10 @@
 			this.getSprite("pov_bust_replacement").setBrush("pov_bust_base_beasts")
 		}*/
 
-		if (this.hasSprite("socket") && this.hasSprite("pov_bust_replacement")) {
+		if (this.hasSprite("socket")
+			&& this.hasSprite("pov_bust_replacement")
+			&& this.getSprite("socket").HasBrush)
+		{
 			local socket = this.getSprite("socket");
 			local replacement = this.getSprite("pov_bust_replacement");
 			local brush = socket.getBrush().Name;
@@ -180,21 +183,21 @@
 
 	}
 
-	// Dying while the entity is still moving crashes the game, so we delay it until 
+	// Dying while the entity is still moving crashes the game, so we delay it until
 	// tactical_state can handle it.
-    q.kill = @(__original) function (_killer = null, _skill = null, _fatalityType = ::Const.FatalityType.None, _silent = false) {
+	q.kill = @(__original) function (_killer = null, _skill = null, _fatalityType = ::Const.FatalityType.None, _silent = false) {
 		if (this.isAlive()
-            && ("State" in ::Tactical)
-            && ::Tactical.State != null
-            && ::Tactical.getNavigator().isTravelling(this))
-        {
-            this.m.IsDying = true;
-            ::Tactical.State.addPendingDeath(this, _killer, _skill, _fatalityType, _silent);
-            return;
-        }
+			&& ("State" in ::Tactical)
+			&& ::Tactical.State != null
+			&& ::Tactical.getNavigator().isTravelling(this))
+		{
+			this.m.IsDying = true;
+			::Tactical.State.addPendingDeath(this, _killer, _skill, _fatalityType, _silent);
+			return;
+		}
 
-        __original(_killer, _skill, _fatalityType, _silent);
-    }
+		__original(_killer, _skill, _fatalityType, _silent);
+	}
 
 	q.onDeath = @(__original) function (_killer, _skill, _tile, _fatalityType) {
 		// First mutant killed flag
