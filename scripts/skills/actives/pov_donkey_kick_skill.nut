@@ -2,8 +2,8 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 	m = {
 		Cooldown = 0
 	},
-	function create()
-	{
+
+	function create() {
 		this.m.ID = "actives.pov_donkey_kick";
 		this.m.Name = "Powerful Kick";
 		this.m.Description = "The main attack of a donkey, more for defense than attack. Maximum damage is the average of your hitpoints and initiative minus 85, with a damage cap on 50 - 70. \n\n Has 1 Turn Cooldown";
@@ -38,46 +38,45 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 1;
 	}
 
-	function getTooltip()
-	{
+	function getTooltip() {
 		local actor = this.getContainer().getActor();
 		local p = actor.getCurrentProperties();
 		local mult = p.MeleeDamageMult;
 		local bodyHealth = actor.getHitpointsMax();
-		local average = (actor.getInitiative() +  bodyHealth) / 2;
+		local average = (actor.getInitiative() + bodyHealth) / 2;
 		local damageMin = 5;
 		local damageMax = 10;
 		local avgMin = average - 100;
 		local avgMax = average - 85;
 
-		if ((average - 100) > 0)
-			{
+		if ((average - 100) > 0) {
 			damageMin += avgMin;
-			}
+		}
 
-		if ((average - 90) > 0)
-			{
+		if ((average - 90) > 0) {
 			damageMax += avgMax;
-			}
+		}
 
-		if (damageMin > 60) {damageMin = 60;}
-		if (damageMax > 80) {damageMax = 80;}
+		if (damageMin > 60) {
+			damageMin = 60;
+		}
+		if (damageMax > 80) {
+			damageMax = 80;
+		}
 
 		local damage_regular_min = this.Math.floor(damageMin * p.DamageRegularMult * p.DamageTotalMult);
 		local damage_regular_max = this.Math.floor(damageMax * p.DamageRegularMult * p.DamageTotalMult);
 		local damage_Armor_min = this.Math.floor(damageMin * p.DamageArmorMult * p.DamageTotalMult);
 		local damage_Armor_max = this.Math.floor(damageMax * p.DamageArmorMult * p.DamageTotalMult);
 		local damage_direct_max = this.Math.floor(damageMax * this.m.DirectDamageMult);
-		if (this.getContainer().getActor().getSkills().hasPerk(::Legends.Perk.LegendMuscularity))
-		{
+		if (this.getContainer().getActor().getSkills().hasPerk(::Legends.Perk.LegendMuscularity)) {
 			local muscularity = this.Math.floor(bodyHealth * 0.1);
-			 damage_regular_max += muscularity;
-			 damage_Armor_max += muscularity;
-			 damage_direct_max += muscularity;
+			damage_regular_max += muscularity;
+			damage_Armor_max += muscularity;
+			damage_direct_max += muscularity;
 		}
 
-		if(mult != 1.0)
-		{
+		if (mult != 1.0) {
 			damage_regular_min = this.Math.floor(damage_regular_min * mult);
 			damage_regular_max = this.Math.floor(damage_regular_max * mult);
 			damage_Armor_min = this.Math.floor(damage_Armor_min * mult);
@@ -109,8 +108,7 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 			text = "Inflicts damage based on hitpoints and initiative [color=" + this.Const.UI.Color.DamageValue + "]" + damage_regular_min + "[/color] - [color=" + this.Const.UI.Color.DamageValue + "]" + damage_regular_max + "[/color] damage, up to [color=" + this.Const.UI.Color.DamageValue + "]" + damage_direct_max + "[/color] damage can ignore armor"
 		});
 
-		if (damage_Armor_max > 0)
-		{
+		if (damage_Armor_max > 0) {
 			ret.push({
 				id = 5,
 				type = "text",
@@ -133,55 +131,45 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 			text = "Has [color=" + this.Const.UI.Color.NegativeValue + "]-10%[/color] chance to hit"
 		});
 
-		if (this.m.Cooldown >= 1)
-		{
-			ret.push(
-				{
-					id = 7,
-					type = "hint",
-					icon = "ui/icons/warning.png",
-					text = "Skill is on cooldown. Turns remaining: [color=" + this.Const.UI.Color.NegativeValue + "]"+this.m.Cooldown+"[/color]"
-				}
-			);
+		if (this.m.Cooldown >= 1) {
+			ret.push({
+				id = 7,
+				type = "hint",
+				icon = "ui/icons/warning.png",
+				text = "Skill is on cooldown. Turns remaining: [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.Cooldown + "[/color]"
+			});
 		}
 
 		return ret;
 	}
 
-	function findTileToKnockBackTo( _userTile, _targetTile )
-	{
+	function findTileToKnockBackTo(_userTile, _targetTile) {
 		local dir = _userTile.getDirectionTo(_targetTile);
 
-		if (_targetTile.hasNextTile(dir))
-		{
+		if (_targetTile.hasNextTile(dir)) {
 			local knockToTile = _targetTile.getNextTile(dir);
 
-			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
-			{
+			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1) {
 				return knockToTile;
 			}
 		}
 
 		local altdir = dir - 1 >= 0 ? dir - 1 : 5;
 
-		if (_targetTile.hasNextTile(altdir))
-		{
+		if (_targetTile.hasNextTile(altdir)) {
 			local knockToTile = _targetTile.getNextTile(altdir);
 
-			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
-			{
+			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1) {
 				return knockToTile;
 			}
 		}
 
 		altdir = dir + 1 <= 5 ? dir + 1 : 0;
 
-		if (_targetTile.hasNextTile(altdir))
-		{
+		if (_targetTile.hasNextTile(altdir)) {
 			local knockToTile = _targetTile.getNextTile(altdir);
 
-			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
-			{
+			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1) {
 				return knockToTile;
 			}
 		}
@@ -189,57 +177,53 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 		return null;
 	}
 
-	function onCombatStarted()
-	{
+	function onCombatStarted() {
 		this.m.Cooldown = 0;
 	}
 
-	function onTurnStart()
-	{
+	function onTurnStart() {
 		this.m.Cooldown = 0;
 	}
 
-	function isUsable()
-	{
-		if (this.m.Cooldown <= 0){
+	function isUsable() {
+		if (this.m.Cooldown <= 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function onAnySkillUsed( _skill, _targetEntity, _properties )
-	{
-		if (_skill == this)
-		{
+	function onAnySkillUsed(_skill, _targetEntity, _properties) {
+		if (_skill == this) {
 			local actor = this.getContainer().getActor();
 			local p = actor.getCurrentProperties();
 			local mult = p.MeleeDamageMult;
 			local bodyHealth = actor.getHitpointsMax();
-			local average = (actor.getInitiative() +  bodyHealth) / 2;
+			local average = (actor.getInitiative() + bodyHealth) / 2;
 			local damageMin = 5;
 			local damageMax = 10;
 			local avgMin = average - 100;
 			local avgMax = average - 85;
 
-			if ((average - 100) > 0)
-				{
+			if ((average - 100) > 0) {
 				damageMin += avgMin;
-				}
+			}
 
-			if ((average - 90) > 0)
-				{
+			if ((average - 90) > 0) {
 				damageMax += avgMax;
-				}
+			}
 
-			if (this.getContainer().getActor().getSkills().hasPerk(::Legends.Perk.LegendMuscularity))
-			{
+			if (this.getContainer().getActor().getSkills().hasPerk(::Legends.Perk.LegendMuscularity)) {
 				local muscularity = this.Math.floor(bodyHealth * 0.1);
 				damageMax += muscularity;
 			}
 
-			if (damageMin > 50) {damageMin = 50;}
-			if (damageMax > 70) {damageMax = 70;}
+			if (damageMin > 50) {
+				damageMin = 50;
+			}
+			if (damageMax > 70) {
+				damageMax = 70;
+			}
 
 			_properties.DamageRegularMin = this.Math.floor(damageMin);
 			_properties.DamageRegularMax = this.Math.floor(damageMax);
@@ -248,56 +232,46 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onUse( _user, _targetTile )
-	{
+	function onUse(_user, _targetTile) {
 		this.m.Cooldown = 1;
-		this.attackEntity(_user, _targetTile.getEntity());
+		local ret = this.attackEntity(_user, _targetTile.getEntity());
 
 		local target = _targetTile.getEntity();
 
-		if (target == null)
-		{
-			return;
+		if (target == null) {
+			return ret;
 		}
-		
-		if (!target.isAlive() || target.isDying())
-		{
-			return;
+
+		if (!target.isAlive() || target.isDying()) {
+			return ret;
 		}
 
 		local success = this.Math.rand(1, 100) <= this.getHitchance(_targetTile.getEntity());
 
-		if (this.m.SoundOnUse.len() != 0)
-		{
+		if (this.m.SoundOnUse.len() != 0) {
 			this.Sound.play(this.m.SoundOnUse[this.Math.rand(0, this.m.SoundOnUse.len() - 1)], this.Const.Sound.Volume.Skill, _user.getPos());
 		}
 
-		if (!success)
-		{
+		if (!success) {
 			target.onMissed(this.getContainer().getActor(), this);
 		}
 
 		local knockToTile = this.findTileToKnockBackTo(_user.getTile(), _targetTile);
 
-		if (knockToTile == null)
-		{
+		if (knockToTile == null) {
 			success = false;
 		}
 
-		if (success)
-		{
+		if (success) {
 			this.applyFatigueDamage(target, 10);
 		}
 
-		if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab)
-		{
+		if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab) {
 			success = false;
 		}
 
-		if (!success)
-		{
-			if (this.m.SoundOnMiss.len() != 0)
-			{
+		if (!success) {
+			if (this.m.SoundOnMiss.len() != 0) {
 				this.Sound.play(this.m.SoundOnMiss[this.Math.rand(0, this.m.SoundOnMiss.len() - 1)], this.Const.Sound.Volume.Skill, _user.getPos());
 			}
 
@@ -305,7 +279,8 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 			return success;
 		}
 
-		if (!_user.isHiddenToPlayer() && (_targetTile.IsVisibleForPlayer || knockToTile.IsVisibleForPlayer))
+		if (!_user.isHiddenToPlayer()
+			&& (_targetTile.IsVisibleForPlayer || knockToTile.IsVisibleForPlayer))
 		{
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has knocked back " + this.Const.UI.getColorizedEntityName(target));
 		}
@@ -315,19 +290,19 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 		skills.removeByID("effects.spearwall");
 		skills.removeByID("effects.riposte");
 
-		if (_user.getSkills().hasSkill("trait.oath_of_fortification") && target.isAlive() && !target.isNonCombatant())
+		if (_user.getSkills().hasSkill("trait.oath_of_fortification")
+			&& target.isAlive()
+			&& !target.isNonCombatant())
 		{
 			local stagger = this.new("scripts/skills/effects/staggered_effect");
 			target.getSkills().add(stagger);
 
-			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-			{
+			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer) {
 				this.Tactical.EventLog.log(stagger.getLogEntryOnAdded(this.Const.UI.getColorizedEntityName(_user), this.Const.UI.getColorizedEntityName(target)));
 			}
 		}
 
-		if (this.m.SoundOnHit.len() != 0)
-		{
+		if (this.m.SoundOnHit.len() != 0) {
 			this.Sound.play(this.m.SoundOnHit[this.Math.rand(0, this.m.SoundOnHit.len() - 1)], this.Const.Sound.Volume.Skill, _user.getPos());
 		}
 
@@ -335,10 +310,11 @@ this.pov_donkey_kick_skill <- this.inherit("scripts/skills/skill", {
 		target.setCurrentMovementType(this.Const.Tactical.MovementType.Involuntary);
 
 		this.Tactical.getNavigator().teleport(target, knockToTile, null, null, true);
+
+		return ret;
 	}
 
-	function onCombatFinished()
-	{
+	function onCombatFinished() {
 		this.m.Cooldown = 0;
 	}
 

@@ -154,18 +154,18 @@ this.pov_headbutt_skill <- this.inherit("scripts/skills/skill", {
 	function onUse( _user, _targetTile )
 	{
 		this.m.Cooldown = 2;
-		this.attackEntity(_user, _targetTile.getEntity());
+		local ret = this.attackEntity(_user, _targetTile.getEntity());
 
 		local target = _targetTile.getEntity();
 
 		if (target == null)
 		{
-			return;
+			return ret;
 		}
 
 		if (!target.isAlive() || target.isDying())
 		{
-			return;
+			return ret;
 		}
 
 		/*local success = this.Math.rand(1, 100) <= this.getHitchance(_targetTile.getEntity());
@@ -213,6 +213,8 @@ this.pov_headbutt_skill <- this.inherit("scripts/skills/skill", {
 		}*/
 
 		//_user.getSkills().onTargetHit(this, target, this.Const.BodyPart.Body, 0, 0);
+
+		return ret;
 	}
 
 	function onCombatFinished()

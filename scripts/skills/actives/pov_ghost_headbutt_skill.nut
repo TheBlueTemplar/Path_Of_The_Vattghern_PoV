@@ -2,8 +2,8 @@ this.pov_ghost_headbutt_skill <- this.inherit("scripts/skills/skill", {
 	m = {
 		Cooldown = 0
 	},
-	function create()
-	{
+
+	function create() {
 		this.m.ID = "actives.pov_ghost_headbutt";
 		this.m.Name = "Ghost Headbutt";
 		this.m.Description = "Slam your horned head into the enemy. Damage scales with your current armor. Chance to daze the enemy on a body hit, or stun on a head hit. \n\n Has a cooldown of 2 turns.";
@@ -38,8 +38,7 @@ this.pov_ghost_headbutt_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 1;
 	}
 
-	function getTooltip()
-	{
+	function getTooltip() {
 		local ret = this.getDefaultTooltip();
 		ret.push({
 			id = 6,
@@ -66,44 +65,36 @@ this.pov_ghost_headbutt_skill <- this.inherit("scripts/skills/skill", {
 			text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] chance to hit the head"
 		});
 
-		if (this.m.Cooldown >= 1)
-		{
-			ret.push(
-				{
-					id = 7,
-					type = "hint",
-					icon = "ui/icons/warning.png",
-					text = "Skill is on cooldown. Turns remaining: [color=" + this.Const.UI.Color.NegativeValue + "]"+this.m.Cooldown+"[/color]"
-				}
-			);
+		if (this.m.Cooldown >= 1) {
+			ret.push({
+				id = 7,
+				type = "hint",
+				icon = "ui/icons/warning.png",
+				text = "Skill is on cooldown. Turns remaining: [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.Cooldown + "[/color]"
+			});
 		}
 
 		return ret;
 	}
 
-	function onCombatStarted()
-	{
+	function onCombatStarted() {
 		this.m.Cooldown = 0;
 	}
 
-	function onTurnStart()
-	{
+	function onTurnStart() {
 		this.m.Cooldown = 0;
 	}
 
-	function isUsable()
-	{
-		if (this.m.Cooldown <= 0){
+	function isUsable() {
+		if (this.m.Cooldown <= 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function onAnySkillUsed( _skill, _targetEntity, _properties )
-	{
-		if (_skill == this)
-		{
+	function onAnySkillUsed(_skill, _targetEntity, _properties) {
+		if (_skill == this) {
 			// Hit Chance Mod
 			_properties.MeleeSkill -= 5;
 
@@ -119,15 +110,18 @@ this.pov_ghost_headbutt_skill <- this.inherit("scripts/skills/skill", {
 
 			// Example: on 400 Armor: damage = 45 - 60 (58 - 78 on armor, 0 - 25 ignore armor)
 			// Base Stats: 300 H.Armor: damage = 35 - 50 (45 - 65 on armor, 0 - 22 ignore armor)
-			if (modifier >= 5)
-			{
+			if (modifier >= 5) {
 				damageMin += modifier;
 				damageMax += modifier;
 			}
 
 			// Hardcap on ~700 Armor.
-			if (damageMin > 75) {damageMin = 75;}
-			if (damageMax > 90) {damageMax = 90;}
+			if (damageMin > 75) {
+				damageMin = 75;
+			}
+			if (damageMax > 90) {
+				damageMax = 90;
+			}
 
 			_properties.DamageRegularMin = this.Math.floor(damageMin);
 			_properties.DamageRegularMax = this.Math.floor(damageMax);
@@ -136,51 +130,44 @@ this.pov_ghost_headbutt_skill <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onUse( _user, _targetTile )
-	{
+	function onUse(_user, _targetTile) {
 		this.m.Cooldown = 2;
 		this.spawnAttackEffect(_targetTile, this.Const.Tactical.AttackEffectThrust);
-		this.attackEntity(_user, _targetTile.getEntity());
+		return this.attackEntity(_user, _targetTile.getEntity());
 	}
 
-	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
-	{
-		if (_skill == this && _targetEntity.isAlive() && !_targetEntity.isDying() && !_targetEntity.getCurrentProperties().IsImmuneToStun)
+	function onTargetHit(_skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor) {
+		if (_skill == this
+			&& _targetEntity.isAlive()
+			&& !_targetEntity.isDying()
+			&& !_targetEntity.getCurrentProperties().IsImmuneToStun)
 		{
 			local targetTile = _targetEntity.getTile();
 			local user = this.getContainer().getActor();
 			local chance = 60;
 			local chanceHead = 75;
 
-			if (_bodyPart == this.Const.BodyPart.Head)
-			{
-				if (this.Math.rand(0,100) <= chanceHead)
-				{
+			if (_bodyPart == this.Const.BodyPart.Head) {
+				if (this.Math.rand(0, 100) <= chanceHead) {
 					_targetEntity.getSkills().add(this.new("scripts/skills/effects/stunned_effect"));
 
-					if (!user.isHiddenToPlayer() && targetTile.IsVisibleForPlayer)
-					{
+					if (!user.isHiddenToPlayer() && targetTile.IsVisibleForPlayer) {
 						this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(user) + " struck a hit that leaves " + this.Const.UI.getColorizedEntityName(_targetEntity) + " stunned");
 					}
 				}
-			}
-			else if (_bodyPart == this.Const.BodyPart.Body)
-			{
-				if (this.Math.rand(0,100) <= chance)
-				{
+			} else if (_bodyPart == this.Const.BodyPart.Body) {
+				if (this.Math.rand(0, 100) <= chance) {
 					_targetEntity.getSkills().add(this.new("scripts/skills/effects/dazed_effect"));
 
-					if (!user.isHiddenToPlayer() && targetTile.IsVisibleForPlayer)
-					{
+					if (!user.isHiddenToPlayer() && targetTile.IsVisibleForPlayer) {
 						this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(user) + " struck a hit that leaves " + this.Const.UI.getColorizedEntityName(_targetEntity) + " dazed");
 					}
 				}
-			}	
+			}
 		}
 	}
 
-	function onCombatFinished()
-	{
+	function onCombatFinished() {
 		this.m.Cooldown = 0;
 	}
 
