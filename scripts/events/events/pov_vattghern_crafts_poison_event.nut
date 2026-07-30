@@ -2,8 +2,8 @@ this.pov_vattghern_crafts_poison_event <- this.inherit("scripts/events/event", {
 	m = {
 		vattghern = null
 	},
-	function create()
-	{
+
+	function create() {
 		this.m.ID = "event.pov_vattghern_crafts_poison";
 		this.m.Title = "During camp...";
 		this.m.Cooldown = 9999.0 * this.World.getTime().SecondsPerDay;
@@ -16,15 +16,13 @@ this.pov_vattghern_crafts_poison_event <- this.inherit("scripts/events/event", {
 			Options = [
 				{
 					Text = "I Won\'t...",
-					function getResult( _event )
-					{
+					function getResult(_event) {
 						return 0;
 					}
-
 				}
 			],
-			function start( _event )
-			{
+
+			function start(_event) {
 				this.Characters.push(_event.m.vattghern.getImagePath());
 				local item = this.new("scripts/items/accessory/pov_vattghern_poison_item");
 				local secondItem = this.new("scripts/items/misc/spider_silk_item");
@@ -52,31 +50,27 @@ this.pov_vattghern_crafts_poison_event <- this.inherit("scripts/events/event", {
 		});
 	}
 
-	function onUpdateScore()
-	{
-		if (!this.Const.DLC.Unhold)
-		{
+	function onUpdateScore() {
+		if (!this.Const.DLC.Unhold) {
 			return;
 		}
 
-		if (!this.World.Assets.getStash().hasEmptySlot())
-		{
+		if (!this.World.Assets.getStash().hasEmptySlot()) {
 			return;
 		}
 
 		local brothers = this.World.getPlayerRoster().getAll();
 		local candidates_vattghern = [];
 
-		foreach( bro in brothers )
-		{
-			if (bro.getSkills().hasSkill("effects.pov_spider_mutagen"))
+		foreach (bro in brothers) {
+			if (bro.getSkills().hasSkill("effects.pov_spider_mutagen")
+				|| bro.getSkills().hasSkill("effects.pov_spider_mutagen_upgraded"))
 			{
 				candidates_vattghern.push(bro);
 			}
 		}
 
-		if (candidates_vattghern.len() == 0)
-		{
+		if (candidates_vattghern.len() == 0) {
 			return;
 		}
 
@@ -85,12 +79,9 @@ this.pov_vattghern_crafts_poison_event <- this.inherit("scripts/events/event", {
 		//this.m.Score = 9999;
 	}
 
-	function onPrepare()
-	{
-	}
+	function onPrepare() {}
 
-	function onPrepareVariables( _vars )
-	{
+	function onPrepareVariables(_vars) {
 		_vars.push([
 			"vattghern",
 			this.m.vattghern != null ? this.m.vattghern.getName() : ""
@@ -98,15 +89,12 @@ this.pov_vattghern_crafts_poison_event <- this.inherit("scripts/events/event", {
 		::Const.LegendMod.extendVarsWithPronouns(_vars, this.m.vattghern.getGender(), "vattghern");
 	}
 
-	function onDetermineStartScreen()
-	{
+	function onDetermineStartScreen() {
 		return "A";
 	}
 
-	function onClear()
-	{
+	function onClear() {
 		this.m.vattghern = null;
 	}
 
 });
-
