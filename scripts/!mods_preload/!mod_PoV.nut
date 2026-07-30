@@ -22,7 +22,7 @@
 ::TLW <- {
 	ID = "mod_PoV",
 	Name = "Path of the Vatt\'ghern", //PoV
-	Version = "4.2.6", // "Special" Edition
+	Version = "4.2.7", // "Special" Edition
 	//EnableEnemyMutation = true,	//default settings
 	//Overhaul = true,
 	EnemyMutationScaling = true,
