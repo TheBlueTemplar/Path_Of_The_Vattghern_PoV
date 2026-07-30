@@ -1,7 +1,7 @@
 this.pov_vattghern_poison_blueprint <- this.inherit("scripts/crafting/blueprint", {
 	m = {},
-	function create()
-	{
+
+	function create() {
 		this.blueprint.create();
 		this.m.ID = "blueprint.pov_vattghern_poison";
 		this.m.Type = this.Const.Items.ItemType.Usable;
@@ -17,7 +17,8 @@ this.pov_vattghern_poison_blueprint <- this.inherit("scripts/crafting/blueprint"
 		local skills = [
 			{
 				Scripts = [
-					"scripts/skills/effects/pov_spider_mutagen_effect"
+					"scripts/skills/effects/pov_spider_mutagen_effect",
+					"scripts/skills/effects/pov_spider_mutagen_upgraded_effect"
 					//"scripts/skills/perks/perk_legend_potion_brewer"
 				]
 			}
@@ -25,10 +26,8 @@ this.pov_vattghern_poison_blueprint <- this.inherit("scripts/crafting/blueprint"
 		this.initSkills(skills);
 	}
 
-	function onCraft( _stash )
-	{
+	function onCraft(_stash) {
 		_stash.add(this.new("scripts/items/accessory/pov_vattghern_poison_item"));
 	}
 
 });
-
