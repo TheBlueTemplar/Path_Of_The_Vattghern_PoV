@@ -4,8 +4,8 @@ this.pov_psychopath_trait <- this.inherit("scripts/skills/traits/character_trait
 		//KillsToSatisfy = 100,
 		HumanKills = 0
 	},
-	function create()
-	{
+
+	function create() {
 		this.character_trait.create();
 		this.m.ID = "trait.pov_psychopath";
 		this.m.Name = "Psychopath";
@@ -14,10 +14,7 @@ this.pov_psychopath_trait <- this.inherit("scripts/skills/traits/character_trait
 		this.m.IsSerialized = true;
 	}
 
-
-
-	function getTooltip()
-	{
+	function getTooltip() {
 		local result = [
 			{
 				id = 1,
@@ -51,7 +48,7 @@ this.pov_psychopath_trait <- this.inherit("scripts/skills/traits/character_trait
 				id = 10,
 				type = "text",
 				icon = "ui/icons/bravery.png",
-				text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.PositiveValue + "]-6[/color] when in a battle against humans."
+				text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.NegativeValue + "]-5[/color] when in a battle against humans."
 			},
 			{
 				id = 10,
@@ -85,30 +82,24 @@ this.pov_psychopath_trait <- this.inherit("scripts/skills/traits/character_trait
 
 	}
 
-
-	function onUpdate( _properties )
-	{
-		if (!this.getContainer().getActor().isPlacedOnMap())
-		{
+	function onUpdate(_properties) {
+		if (!this.getContainer().getActor().isPlacedOnMap()) {
 			// If not in battle, then this should be a trait and not a status effect
 			this.m.Type = ::Const.SkillType.Trait;
 			return;
 		}
-		
+
 		local fightingHumans = false;
 		local enemies = this.Tactical.Entities.getAllHostilesAsArray();
 
-		foreach( enemy in enemies )
-		{
-			if (enemy.getFlags().has("human"))
-			{
+		foreach (enemy in enemies) {
+			if (enemy.getFlags().has("human")) {
 				fightingHumans = true;
 				break;
 			}
 		}
 
-		if (fightingHumans)
-		{
+		if (fightingHumans) {
 			// Buffs
 			_properties.Bravery += 15;
 			_properties.MeleeSkill += 8;
@@ -131,10 +122,8 @@ this.pov_psychopath_trait <- this.inherit("scripts/skills/traits/character_trait
 		}
 	}
 
-	function onTargetKilled( _targetEntity, _skill )
-	{
-		if (_targetEntity.getXPValue() > 0 && _targetEntity.getFlags().has("human"))
-		{
+	function onTargetKilled(_targetEntity, _skill) {
+		if (_targetEntity.getXPValue() > 0 && _targetEntity.getFlags().has("human")) {
 			this.m.HumanKills += 1;
 			// Make a chance for a cool manic laughter sound effect to play. (need to make that first)
 		}
@@ -142,21 +131,16 @@ this.pov_psychopath_trait <- this.inherit("scripts/skills/traits/character_trait
 
 	/*function onCombatFinished()
 	{
-		
 	}*/
 
-	function onSerialize( _out )
-	{
+	function onSerialize(_out) {
 		this.character_trait.onSerialize(_out);
 		_out.writeU16(this.m.HumanKills);
 	}
 
-	function onDeserialize( _in )
-	{
+	function onDeserialize(_in) {
 		this.character_trait.onDeserialize(_in);
 		this.m.HumanKills = _in.readU16();
 	}
 
-
 });
-

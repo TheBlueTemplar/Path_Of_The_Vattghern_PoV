@@ -294,7 +294,7 @@ this.pov_vattghern_background <- this.inherit("scripts/skills/backgrounds/charac
 			id = 13,
 			type = "text",
 			icon = "ui/icons/bravery.png",
-			text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.PositiveValue + "]-5[/color]."
+			text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.NegativeValue + "]-5[/color]."
 		});
 		ret.push({
 			id = 13,

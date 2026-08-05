@@ -1,7 +1,7 @@
 this.pov_rot_weak_mutagen_effect <- this.inherit("scripts/skills/skill", {
 	m = {},
-	function create()
-	{
+
+	function create() {
 		this.m.ID = "effects.pov_rot_weak_mutagen";
 		this.m.Name = "Aura of Rot";
 		this.m.Icon = "skills/pov_flesh_golem_mutant.png";
@@ -14,13 +14,11 @@ this.pov_rot_weak_mutagen_effect <- this.inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 	}
 
-	function getDescription()
-	{
+	function getDescription() {
 		return "[color=" + this.Const.UI.Color.povPerkBlue + "]Rotten Stench[/color]: This character is embraced by rot, allowing them to poison, debuff and test the resolve of any enemy that dares approach them, while also benefitting from increased constitution.\n\n[color=" + this.Const.UI.Color.povPerkBlue + "]Compromised Reflexes[/color]: Rot is all about entropy, thus weakening this character\'s speed and reflexes, making them more vulnerable in battle.";
 	}
 
-	function getTooltip()
-	{
+	function getTooltip() {
 		local ret = [
 			{
 				id = 1,
@@ -48,7 +46,7 @@ this.pov_rot_weak_mutagen_effect <- this.inherit("scripts/skills/skill", {
 				id = 11,
 				type = "text",
 				icon = "ui/icons/bravery.png",
-				text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.PositiveValue + "]-4[/color]."
+				text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.NegativeValue + "]-4[/color]."
 			},
 			{
 				id = 11,
@@ -72,14 +70,12 @@ this.pov_rot_weak_mutagen_effect <- this.inherit("scripts/skills/skill", {
 		return ret;
 	}
 
-	function onCombatStarted()
-	{
+	function onCombatStarted() {
 		local actor = this.getContainer().getActor();
 		actor.getSkills().add(this.new("scripts/skills/effects/pov_unbearable_stench_passive_effect"));
 	}
 
-	function onUpdate( _properties )
-	{
+	function onUpdate(_properties) {
 		// Buffs
 		_properties.HitpointsMult *= 1.12;
 		_properties.Threat += 4;
@@ -89,23 +85,18 @@ this.pov_rot_weak_mutagen_effect <- this.inherit("scripts/skills/skill", {
 		_properties.InitiativeMult *= 0.75;
 	}
 
-	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
-	{
-		if (_hitInfo.DamageType == this.Const.Damage.DamageType.Burning)
-		{
+	function onBeforeDamageReceived(_attacker, _skill, _hitInfo, _properties) {
+		if (_hitInfo.DamageType == this.Const.Damage.DamageType.Burning) {
 			_properties.DamageReceivedRegularMult *= 1.40;
 		}
 	}
 
-	function isHidden()
-	{
+	function isHidden() {
 		return this.inBattleHiddenCheck();
 	}
 
-	function inBattleHiddenCheck()
-	{
-		if (!("State" in this.Tactical) || this.Tactical.State == null)
-		{
+	function inBattleHiddenCheck() {
+		if (!("State" in this.Tactical) || this.Tactical.State == null) {
 			return false;
 		}
 
@@ -113,4 +104,3 @@ this.pov_rot_weak_mutagen_effect <- this.inherit("scripts/skills/skill", {
 	}
 
 });
-

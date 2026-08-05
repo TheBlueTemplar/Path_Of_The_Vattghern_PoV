@@ -116,23 +116,20 @@ this.pov_mutant_background <- this.inherit("scripts/skills/backgrounds/character
 			Magic = []
 		}
 
-		local r = this.Math.rand(1,3);
-		if (r == 1)
-		{
+		local r = this.Math.rand(1, 3);
+		if (r == 1) {
 			this.m.PerkTreeDynamic.Class.extend([
 				::Const.Perks.RaiderClassTree,
 			]);
-		} else if (r == 2)
-		{
+		} else if (r == 2) {
 			this.m.PerkTreeDynamic.Class.extend([
 				::Const.Perks.ClubClassTree,
 			]);
-		} else if (r == 3)
-		{
+		} else if (r == 3) {
 			this.m.PerkTreeDynamic.Class.extend([
 				::Const.Perks.InquisitionClassTree,
 			]);
-		} 
+		}
 	}
 
 	//Default Male
@@ -327,7 +324,7 @@ this.pov_mutant_background <- this.inherit("scripts/skills/backgrounds/character
 			id = 13,
 			type = "text",
 			icon = "ui/icons/bravery.png",
-			text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.PositiveValue + "]-6[/color]."
+			text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.NegativeValue + "]-6[/color]."
 		});
 		ret.push({
 			id = 13,

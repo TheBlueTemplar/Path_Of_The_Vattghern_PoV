@@ -128,19 +128,16 @@ this.pov_forsaken_background <- this.inherit("scripts/skills/backgrounds/charact
 			Magic = []
 		}
 
-		local r = this.Math.rand(1,3);
-		if (r == 1)
-		{
+		local r = this.Math.rand(1, 3);
+		if (r == 1) {
 			this.m.PerkTreeDynamic.Class.extend([
 				::Const.Perks.RaiderClassTree,
 			]);
-		} else if (r == 2)
-		{
+		} else if (r == 2) {
 			this.m.PerkTreeDynamic.Class.extend([
 				::Const.Perks.ClubClassTree,
 			]);
-		} else if (r == 3)
-		{
+		} else if (r == 3) {
 			this.m.PerkTreeDynamic.Class.extend([
 				::Const.Perks.WoodaxeClassTree,
 			]);
@@ -339,7 +336,7 @@ this.pov_forsaken_background <- this.inherit("scripts/skills/backgrounds/charact
 			id = 13,
 			type = "text",
 			icon = "ui/icons/bravery.png",
-			text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.PositiveValue + "]-10[/color]."
+			text = "Reduces the Resolve of any opponent engaged in melee by [color=" + this.Const.UI.Color.NegativeValue + "]-10[/color]."
 		});
 		ret.push({
 			id = 13,
