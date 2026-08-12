@@ -65,8 +65,9 @@
 	}
 
 	q.isUsable = @(__original) function () {
-		local item = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
+		local item = this.getItem();
 		if (item != null
+			&& !item.isNull()
 			&& item.isItemType(this.Const.Items.ItemType.RangedWeapon)
 			&& this.m.IsGun == false)
 		{
@@ -77,9 +78,9 @@
 	}
 
 	q.getAmmo <- function () {
-		local item = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
+		local item = this.getItem();
 
-		if (item == null) {
+		if (item == null || item.isNull()) {
 			return 0;
 		}
 
